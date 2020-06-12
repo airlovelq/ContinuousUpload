@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: continuous-upload-proxy
+  namespace: continuous-upload
+spec:
+  type: NodePort
+  ports:
+    - port: EX_PORT
+      targetPort: DOCKER_PORT
+      nodePort: EX_PORT
+  selector:
+    name: continuous-upload-proxy

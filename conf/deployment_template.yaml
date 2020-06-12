@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: continuous-upload-proxy
+  namespace: continuous-upload
+spec:
+  replicas: 1
+  minReadySeconds: 30
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      name: continuous-upload-proxy
+  template:
+    metadata:
+      labels:
+        name: continuous-upload-proxy
+        group: continuous-upload
+    spec:
+      containers:
+      - name: continuous-upload-proxy
+        image: continuous-upload-proxy:VERSION
+        ports:
+          - containerPort: DOCKER_PORT
+        envFrom:
+          - configMapRef:
+              name: continuous-upload-proxy-configmaps
+        volumeMounts:
+          - name: data
+            mountPath: DOCKER_DATA_DIR
+        # resources:
+        #   requests:
+        #     cpu: 8
+        #     memory: 8096Mi
+        # command: ["sleep", "10000000000000"]
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-continuous-upload-proxy-data
+      
