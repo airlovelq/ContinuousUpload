@@ -12,9 +12,9 @@ sed -ri "s/DOCKER_PORT/$DOCKER_PORT/g" conf/service.yaml
 
 
 cp conf/deployment_template.yaml conf/deployment.yaml
-sed -ri "s/VERSION/$VERSION/g" conf/deployment_template.yaml
-sed -ri "s!DOCKER_DATA_DIR!$DOCKER_DATA_DIR!g" conf/deployment_template.yaml
-sed -ri "s/DOCKER_PORT/$DOCKER_PORT/g" conf/deployment_template.yaml
+sed -ri "s/VERSION/$VERSION/g" conf/deployment.yaml
+sed -ri "s!DOCKER_DATA_DIR!$DOCKER_DATA_DIR!g" conf/deployment.yaml
+sed -ri "s/DOCKER_PORT/$DOCKER_PORT/g" conf/deployment.yaml
 
 kubectl apply -f conf/storage.yaml
 kubectl apply -f conf/service.yaml
