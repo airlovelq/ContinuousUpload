@@ -40,4 +40,6 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: pvc-continuous-upload-proxy-data
+      nodeSelector:
+        continuous-upload-proxy: "true"
       
