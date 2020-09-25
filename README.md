@@ -4,13 +4,13 @@
 基于golang的gin框架实现的简单断点续传模块，支持kubernetes部署
 
 #### 软件架构
-1、conf文件夹：环境变量，kubernetes配置文件
+1. conf文件夹：环境变量，kubernetes配置文件
 
-2、dockerfiles文件夹：docker镜像配置文件
+2. dockerfiles文件夹：docker镜像配置文件
 
-3、scripts文件夹：启动脚本
+3. scripts文件夹：启动脚本
 
-4、src文件夹：代码
+4. src文件夹：代码
 
 #### 安装教程
 
@@ -29,25 +29,45 @@
 如果每次upload成功，直接使用返回的文件大小作为下次上传的offset(file_size)，如果upload有错误，调用status接口获取实际的offset，再从实际的offset开始传。可以参照伪代码，大致如下逻辑：
 
 statusRes = get(/upload/status)
+
 if (statusRes.data.success === 0) {
+
     let fileName = statusRes.data.data.file_name
+
     let fileSize = statusRes.data.data.file_size
+
     while (fileSize < fileRaw.size) {
+
       let formData = new FormData()
+
       formData.append('file_size', fileSize)
+
       formData.append('file', fileRaw.slice(fileSize, Math.min(fileSize + 1024 * 1024, fileRaw.size)), fileName)
+
       let uploadRes = post(/upload, formData)
+
       if ((uploadRes.status !== 200) || (uploadRes.data.success !== 0)) {
+
         statusRes = get(/upload/status)
+
         fileName = statusRes.data.data.file_name
+
         fileSize = uploadRes.data.data.file_size
+
         continue
+
       }
+
       fileSize = uploadRes.data.data.file_size
+
     }
+
     return fileName
+
   }
+
   return null
+
 
 #### 参与贡献
 
