@@ -5,16 +5,23 @@
 
 #### 软件架构
 1、conf文件夹：环境变量，kubernetes配置文件
+
 2、dockerfiles文件夹：docker镜像配置文件
+
 3、scripts文件夹：启动脚本
+
 4、src文件夹：代码
 
 #### 安装教程
 
 1.  需要golang 1.13.4版本
+
 2.  配置环境变量，kubernetes配置文件
+
 3.  bash scripts/compile.sh
+
 4.  bash scripts/build_images.sh
+
 5.  bash scripts/start.sh
 
 #### 使用说明
